@@ -33,10 +33,13 @@ def handle_choice(choice, manager):
             for note in results:
                 print(note)
 
+    elif choice == "4":
+        print(f"Total notes: {manager.count()}")
+
     elif choice == "5":
         confirm = input("Are you sure? (yes/no): ").strip().lower()
         if confirm == "yes":
-            manager.clear(all)
+            manager.clear_all()
             print("All notes cleared.")
 
     elif choice == "6":
@@ -46,7 +49,7 @@ def handle_choice(choice, manager):
         print("Invalid choice. Please enter a number between 1 and 6.")
 
 def main():
-    manager = NoteManager
+    manager = NoteManager()
     while True:
         try:
             show_menu()

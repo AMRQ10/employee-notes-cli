@@ -1,29 +1,18 @@
-from datetime import datetime
+import json
+import os
+from models.notes import Note
 
-class Note:
-    def __init__ (self, employee_name, content):
-        self.employee_name = employee_name
-        self.content = content
-        self.created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-
-    def to_dict (self):
-        return {
-            "employee_name": self.employee_name, 
-            "content": self.content,
-            "created_at": self.created_at
-        }
-        
-    def __str__(self):
-        return f"[{self.created_at}] {self.employee_name}: {self.content}"
-    
+NOTES_FILE = "notes.json"
 
 class NoteManager:
-    def __init__ (self):
+    def __init__(self):
         self.notes = []
+        self.load_from_file()
 
     def add_note(self, employee_name, content):
         note = Note(employee_name, content)
         self.notes.append(note)
+        self.save_to_file()
         print(f"Note added for {employee_name}.")
 
     def get_all_notes(self):
@@ -34,14 +23,34 @@ class NoteManager:
     
     def count(self):
         return len(self.notes)
+    
+    def clear_all(self):
+        self.notes = []
+        self.save_to_file()
 
-manager = NoteManager()
-manager.add_note("Ali", "Completed Q3 report")
-manager.add_note("Sara", "Missed standup meeting")
-manager.add_note("Ali", "Promoted to senior analyst")
+    def save_to_file(self):
+        try:
+            with open(NOTES_FILE, "w") as f:
+                data = [note.to_dict() for note in self.notes]
+                json.dump(data, f, indent=2)
+        except IOError as e:
+            print(f"Error saving notes: {e}")
 
-print(f"Total notes: {manager.count()}")
+    def load_from_file(self):
+        try:
+            with open(NOTES_FILE, "r") as f:
+                data = json.load(f)
+                self.notes = [
+                    Note(d["employee_name"], d["content"], d["created_at"])
+                    for d in data
+                ]
+        except FileNotFoundError:
+            self.notes = []
+        except json.JSONDecodeError:
+            print("Warning: notes file corrupted. Starting fresh.")
+            self.notes = []
 
-for note in manager.search_by_employee("Ali"):
-    print(note)
+
+
+
 
