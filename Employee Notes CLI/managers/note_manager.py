@@ -10,6 +10,10 @@ class NoteManager:
         self.load_from_file()
 
     def add_note(self, employee_name, content):
+        if not employee_name or not employee_name.strip():
+            raise ValueError ("Employee name cannot be empty")
+        if not content or not content.strip():
+            raise ValueError("Note content cannot be empty")
         note = Note(employee_name, content)
         self.notes.append(note)
         self.save_to_file()
