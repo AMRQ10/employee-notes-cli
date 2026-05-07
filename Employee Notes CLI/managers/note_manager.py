@@ -1,6 +1,9 @@
 import json
 import os
 from models.notes import Note
+from colorama import Fore, init
+
+init(autoreset=True)
 
 NOTES_FILE = "notes.json"
 
@@ -9,7 +12,9 @@ class NoteManager:
         self.notes = []
         self.load_from_file()
 
-    def add_note(self, employee_name, content):
+    def add_note(self, employee_name, content, max_notes=100):
+        if len(self.notes) >= max_notes:
+            raise ValueError(f"Maximum note limit of {max_notes} reached.")
         if not employee_name or not employee_name.strip():
             raise ValueError ("Employee name cannot be empty")
         if not content or not content.strip():
@@ -17,7 +22,7 @@ class NoteManager:
         note = Note(employee_name, content)
         self.notes.append(note)
         self.save_to_file()
-        print(f"Note added for {employee_name}.")
+        print(Fore.GREEN + f"Note added for {employee_name}.")
 
     def get_all_notes(self):
         return self.notes
