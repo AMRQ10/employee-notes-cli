@@ -28,18 +28,6 @@ source venv/bin/activate  # Windows: venv\Scripts\activate
 python main.py
 ```
 
-## Progress Log
-- **Day 1 — Apr 25:** Modular CLI structure with JSON persistence
-- **Day 2 — Apr 26:** Refactored into OOP with Note and NoteManager classes
-- **Day 3 — Apr 27:** Error handling, input validation, custom exceptions
-
 ## Tech Stack
 - Python 3.x
 - JSON for data persistence
-
-## What I Learned
-- Modular Python project structure with separated concerns
-- OOP design with classes, inheritance, and dunder methods
-- JSON file persistence and data serialization
-- Error handling and input validation patterns
-- Git workflow and professional commit messages
