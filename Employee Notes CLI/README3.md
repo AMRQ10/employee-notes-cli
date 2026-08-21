@@ -36,3 +36,10 @@ python main.py
 ## Tech Stack
 - Python 3.x
 - JSON for data persistence
+
+## What I Learned
+- Modular Python project structure with separated concerns
+- OOP design with classes, inheritance, and dunder methods
+- JSON file persistence and data serialization
+- Error handling and input validation patterns
+- Git workflow and professional commit messages
